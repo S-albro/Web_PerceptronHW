@@ -1,38 +1,96 @@
 <html>
 <head>
-  
 </head>
 <body>
 
-  <button id="predict">Predict</button>
-  <p id="output"></p>
+<!-- 4x4 switch table -->
+<table border="1">
+<tr>
+  <td><select id="p0"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p1"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p2"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p3"><option value="0">OFF</option><option value="1">ON</option></select></td>
+</tr>
+<tr>
+  <td><select id="p4"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p5"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p6"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p7"><option value="0">OFF</option><option value="1">ON</option></select></td>
+</tr>
+<tr>
+  <td><select id="p8"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p9"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p10"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p11"><option value="0">OFF</option><option value="1">ON</option></select></td>
+</tr>
+<tr>
+  <td><select id="p12"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p13"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p14"><option value="0">OFF</option><option value="1">ON</option></select></td>
+  <td><select id="p15"><option value="0">OFF</option><option value="1">ON</option></select></td>
+</tr>
+</table>
 
-  <script>
-    weights = Array(16).fill(0);
+<button id="predict">Predict</button>
+<p id="output"></p>
+
+<script>
+let weights = Array(16).fill(0);
+let bias = 0;
+
     weights[0] = ?? ;
     weights[1] = ?? ;
-    ...
+    weights[2] = ?? ;
+    weights[3] = ?? ;
+    weights[4] = ?? ;
+    weights[5] = ?? ;
+    weights[6] = ?? ;
+    weights[7] = ?? ;
+    weights[8] = ?? ;
+    weights[9] = ?? ;
+    weights[10] = ?? ;
+    weights[11] = ?? ;
+    weights[12] = ?? ;
+    weights[13] = ?? ;
+    weights[14] = ?? ;
     weights[15] = ??;
     
     bias = ?? ;
 
-    activation_function(z) {
-        return z >= 0 ? 1 : -1;
-    }
-    
-    predict( inputs ) {
-          let linear_product = np.dot(inputs, weights) + bias    
-          y_pred  = activation_function(    linear_product    );
-          return y_pred
-    }
+function activation_function(z) {
+    return z >= 0 ? 1 : -1;
+}
 
+function getInputs() {
+    let inputs = [];
+    for (let i = 0; i < 16; i++) {
+        let val = document.getElementById("p" + i).value;
+        inputs.push(parseInt(val));
+    }
+    return inputs;
+}
 
-   
-    
-  </script>
-    
+function dot(a, b) {
+    let sum = 0;
+    for (let i = 0; i < a.length; i++) {
+        sum += a[i] * b[i];
+    }
+    return sum;
+}
+
+function predict(inputs) {
+    let linear_product = dot(inputs, weights) + bias;
+    return activation_function(linear_product);
+}
+
+// Connect Predict button
+document.getElementById("predict").onclick = function() {
+    let inputs = getInputs();
+    let result = predict(inputs);
+    document.getElementById("output").innerText =
+        result == 1 ? "Prediction: L" : "Prediction: T";
+};
+</script>
+
 </body>
-
-
-  
 </html>
